@@ -1,10 +1,24 @@
 import React from "react";
 
-function PizzaBlock({ title, price, imageUrl }) {
+function PizzaBlock({ title, price, imageUrl, sizes, types }) {
+  const typeName = ["тонкое", "традиционное"];
+
   const [count, setCount] = React.useState(0);
+
+  const [pizzaSize, setPizzaSize] = React.useState(0);
+
+  const [activeType, setActiveType] = React.useState(0);
 
   const onCLickButton = () => {
     setCount(count + 1);
+  };
+
+  const onCLickPizzaSize = (index) => {
+    setPizzaSize(index);
+  };
+
+  const onCLickType = (index) => {
+    setActiveType(index);
   };
   return (
     <div className="pizza-block">
@@ -12,13 +26,27 @@ function PizzaBlock({ title, price, imageUrl }) {
       <h4 className="pizza-block__title">{title}</h4>
       <div className="pizza-block__selector">
         <ul>
-          <li className="active">тонкое</li>
-          <li>традиционное</li>
+          {types.map((type, i) => (
+            <li
+              key={type}
+              className={activeType === i ? "active" : ""}
+              onClick={() => onCLickType(i)}
+            >
+              {typeName[type]}
+            </li>
+          ))}
         </ul>
         <ul>
-          <li className="active">26 см.</li>
-          <li>30 см.</li>
-          <li>40 см.</li>
+          {sizes.map((size, index) => (
+            <li
+              key={size}
+              className={pizzaSize === index ? "active" : ""}
+              onClick={() => onCLickPizzaSize(index)}
+            >
+              {" "}
+              {size} см.
+            </li>
+          ))}
         </ul>
       </div>
       <div className="pizza-block__bottom">
