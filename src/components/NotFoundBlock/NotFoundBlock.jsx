@@ -14,7 +14,6 @@ function NotFoundBlock() {
       <p className={styles.description}>
         Для того, чтобы заказать пиццу, перейди на главную страницу.
       </p>
-      <img src="../img/empty_cart" />
     </div>
   );
 }

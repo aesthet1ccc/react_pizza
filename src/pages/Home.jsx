@@ -19,19 +19,22 @@ function Home() {
         setIsLoading(false);
         setItems(res.data);
       });
+    window.scrollTo(0, 0);
   }, []);
 
   return (
     <>
-      <div className="content__top">
-        <Categories />
-        <Sort />
-      </div>
-      <h2 className="content__title">Все пиццы</h2>
-      <div className="content__items">
-        {isLoading
-          ? [...new Array(8)].map((_, index) => <Skeleton key={index} />)
-          : items.map((obj) => <PizzaBlock {...obj} key={obj.id} />)}
+      <div className="container">
+        <div className="content__top">
+          <Categories />
+          <Sort />
+        </div>
+        <h2 className="content__title">Все пиццы</h2>
+        <div className="content__items">
+          {isLoading
+            ? [...new Array(8)].map((_, index) => <Skeleton key={index} />)
+            : items.map((obj) => <PizzaBlock {...obj} key={obj.id} />)}
+        </div>
       </div>
     </>
   );
