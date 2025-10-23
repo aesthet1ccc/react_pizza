@@ -1,6 +1,10 @@
+import { SearchContext } from "../../App";
 import styles from "./Search.module.scss";
 import clearIcon from "./clear.png";
-function Search({ searchValue, setSearchValue }) {
+import React from "react";
+function Search() {
+  const { searchValue, setSearchValue } = React.useContext(SearchContext);
+
   return (
     <div className={styles.root}>
       <input

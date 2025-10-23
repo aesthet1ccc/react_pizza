@@ -1,13 +1,15 @@
 import React from "react";
-import axios from "axios";
 
 import Categories from "../components/Categories";
 import Sort from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
 import Skeleton from "../components/PizzaBlock/skeleton";
 import Pagination from "../components/Pagination";
+import { SearchContext } from "../App";
 
-function Home({ searchValue }) {
+function Home() {
+  const { searchValue } = React.useContext(SearchContext);
+
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [categoryId, setCategoryId] = React.useState(0);
@@ -17,15 +19,14 @@ function Home({ searchValue }) {
     sortProperty: "rating",
   });
 
-  const category = categoryId > 0 ? `category = ${categoryId}` : "";
+  const category = categoryId > 0 ? `category=${categoryId}` : "";
   const sortBy = sortType.sortProperty.replace("-", "");
   const order = sortType.sortProperty.includes("-") ? "asc" : "desc";
 
   React.useEffect(() => {
     setIsLoading(true);
     fetch(
-      `https://68e7a39510e3f82fbf400c6d.mockapi.io/items?page=${currentPage}&limit=4&sortBy=${sortBy}&order=${order}&category=` +
-        categoryId
+      `https://68e7a39510e3f82fbf400c6d.mockapi.io/items?page=${currentPage}&limit=4&sortBy=${sortBy}&order=${order}&${category}`
     )
       .then((res) => res.json())
       .then((arr) => {
