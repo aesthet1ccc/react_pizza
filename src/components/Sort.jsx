@@ -1,8 +1,9 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setSort } from "../redux/slices/filterSlice";
+import { useClickOutside } from "../assets/onClickOutside";
 
-const itemsPopup = [
+export const itemsPopup = [
   { name: "С высоким рейтингом", sortProperty: "rating" },
   { name: "С низким рейтингом", sortProperty: "-rating" },
   { name: "Дороже", sortProperty: "price" },
@@ -12,6 +13,8 @@ const itemsPopup = [
 
 function Sort() {
   const [open, setOpen] = React.useState(false);
+  const sortRef = React.useRef(null);
+  useClickOutside(sortRef, () => setOpen(false));
 
   const dispatch = useDispatch();
   const sort = useSelector((state) => state.filter.sort);
@@ -24,8 +27,9 @@ function Sort() {
     dispatch(setSort(obj));
     setOpen(false);
   };
+
   return (
-    <div className="sort">
+    <div ref={sortRef} className="sort">
       <div className="sort__label">
         <svg
           width="10"

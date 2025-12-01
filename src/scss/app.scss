@@ -109,7 +109,7 @@ body {
       margin-right: 10px;
       path {
         stroke: $black;
-        stroke-width: 1.9;
+        strokewidth: 1.9;
       }
     }
   }
@@ -301,7 +301,7 @@ body {
           margin-right: 12px;
           path {
             fill: transparent;
-            stroke-width: 2;
+            strokewidth: 2;
           }
         }
       }
@@ -316,13 +316,14 @@ body {
   }
 
   &--empty {
-    margin: 0 auto;
+    margin: 60px auto;
     width: 560px;
     text-align: center;
 
     h2 {
-      font-size: 32px;
-      margin-bottom: 10px;
+      font-size: 36px;
+      margin-bottom: 15px;
+      font-weight: 700;
     }
 
     p {

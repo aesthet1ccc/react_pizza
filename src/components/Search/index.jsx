@@ -1,7 +1,7 @@
 import { SearchContext } from "../../App";
 import debounce from "lodash.debounce";
 import styles from "./Search.module.scss";
-import clearIcon from "./clear.png";
+import clearIcon from "../../assets/clear.png";
 import React from "react";
 function Search() {
   const [value, setValue] = React.useState("");
