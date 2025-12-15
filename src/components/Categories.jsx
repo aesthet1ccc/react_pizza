@@ -1,5 +1,3 @@
-import React from "react";
-
 function Categories({ value, onClickCategory }) {
   const categories = [
     "Все",
@@ -10,9 +8,6 @@ function Categories({ value, onClickCategory }) {
     "Закрытые",
   ];
 
-  // const onClickActiveCategory = (index) => {
-  //   setActiveCategory(index);
-  // };
   return (
     <div className="categories">
       <ul>

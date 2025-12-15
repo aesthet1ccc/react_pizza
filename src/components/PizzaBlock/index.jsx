@@ -1,16 +1,15 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addItem, cartItemSelectorById } from "../../redux/slices/cartSlice";
+
 function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
-  const cartItem = useSelector(cartItemSelectorById(id));
-
-  const addedCount = cartItem ? cartItem.count : 0;
-
   const dispatch = useDispatch();
+
+  const cartItem = useSelector(cartItemSelectorById(id));
+  const addedCount = cartItem ? cartItem.count : 0;
   const typeName = ["тонкое", "традиционное"];
 
   const [pizzaSize, setPizzaSize] = React.useState(0);
-
   const [activeType, setActiveType] = React.useState(0);
 
   const onClickAdd = () => {
@@ -24,14 +23,13 @@ function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
     };
     dispatch(addItem(item));
   };
-
   const onCLickPizzaSize = (index) => {
     setPizzaSize(index);
   };
-
   const onCLickType = (index) => {
     setActiveType(index);
   };
+
   return (
     <div className="pizza-block-wrapper">
       <div className="pizza-block">
@@ -56,7 +54,6 @@ function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
                 className={pizzaSize === index ? "active" : ""}
                 onClick={() => onCLickPizzaSize(index)}
               >
-                {" "}
                 {size} см.
               </li>
             ))}
