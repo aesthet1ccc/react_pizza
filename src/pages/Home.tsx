@@ -1,7 +1,7 @@
 import React from "react";
 import qs from "qs";
-import { useNavigate, Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import Categories from "../components/Categories";
 import Sort from "../components/Sort";
@@ -13,23 +13,24 @@ import {
   setCategoryId,
   setCurrentPage,
 } from "../redux/slices/filterSlice";
-import { fetchPizzas } from "../redux/slices/pizzaSlice";
+import { fetchPizzas, PizzaItem } from "../redux/slices/pizzaSlice";
+import { RootState, useAppDispatch } from "../redux/store";
 
-function Home() {
+const Home: React.FC = () => {
   const sortType = useSelector(selectorSortProperty);
   const { currentPage, categoryId, searchValue } = useSelector(
-    (state) => state.filter
+    (state: RootState) => state.filter
   );
-  const { items, status } = useSelector((state) => state.pizza);
+  const { items, status } = useSelector((state: RootState) => state.pizza);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const onClickCategory = (id) => {
+  const onClickCategory = React.useCallback((id: number) => {
     dispatch(setCategoryId(id));
-  };
+  }, []);
 
-  const onChangePage = (number) => {
-    dispatch(setCurrentPage(number));
+  const onChangePage = (page: number) => {
+    dispatch(setCurrentPage(page));
   };
 
   const getPizzas = async () => {
@@ -68,17 +69,13 @@ function Home() {
   }, []);
 
   const pizzas = items
-    .filter((obj) => {
+    .filter((obj: PizzaItem) => {
       if (obj.title.toLowerCase().includes(searchValue.toLowerCase())) {
         return true;
       }
       return false;
     })
-    .map((obj) => (
-      <Link to={`pizza/${obj.id}`} key={obj.id}>
-        <PizzaBlock {...obj} />
-      </Link>
-    ));
+    .map((obj: PizzaItem) => <PizzaBlock {...obj} key={obj.id} />);
 
   const skeletons = [...new Array(8)].map((_, index) => (
     <Skeleton key={index} />
@@ -112,5 +109,5 @@ function Home() {
       </div>
     </>
   );
-}
+};
 export default Home;

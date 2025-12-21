@@ -105,6 +105,23 @@ body {
   }
 }
 
+.fullPizza_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h1 {
+    font-size: 40px;
+  }
+  p {
+    font-size: 20px;
+  }
+
+  img {
+    margin: 10px 0 10px;
+  }
+}
+
 .cart {
   &__top {
     display: flex;
@@ -212,6 +229,23 @@ body {
         svg {
           path:first-of-type {
             display: none;
+          }
+        }
+
+        &:disabled {
+          opacity: 0.3;
+          border-color: #777777;
+
+          &:active {
+            transform: none;
+          }
+
+          &:hover {
+            background-color: #fff;
+          }
+
+          svg path {
+            fill: #777777;
           }
         }
       }

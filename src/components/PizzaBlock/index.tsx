@@ -1,40 +1,64 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addItem, cartItemSelectorById } from "../../redux/slices/cartSlice";
+import {
+  addItem,
+  CartItem,
+  cartItemSelectorById,
+} from "../../redux/slices/cartSlice";
+import { Link } from "react-router-dom";
 
-function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
+type PizzaBlockProps = {
+  id: string;
+  title: string;
+  price: number;
+  imageUrl: string;
+  sizes: number[];
+  types: number[];
+};
+
+const PizzaBlock: React.FC<PizzaBlockProps> = ({
+  id,
+  title,
+  price,
+  imageUrl,
+  sizes,
+  types,
+}) => {
   const dispatch = useDispatch();
 
   const cartItem = useSelector(cartItemSelectorById(id));
   const addedCount = cartItem ? cartItem.count : 0;
   const typeName = ["тонкое", "традиционное"];
 
-  const [pizzaSize, setPizzaSize] = React.useState(0);
-  const [activeType, setActiveType] = React.useState(0);
+  const [pizzaSize, setPizzaSize] = React.useState<number>(0);
+  const [activeType, setActiveType] = React.useState<number>(0);
 
   const onClickAdd = () => {
-    const item = {
+    const item: CartItem = {
       id,
       title,
       price,
       imageUrl,
       type: typeName[activeType],
       size: sizes[pizzaSize],
+      count: 0,
     };
     dispatch(addItem(item));
   };
-  const onCLickPizzaSize = (index) => {
+  const onCLickPizzaSize = (index: number) => {
     setPizzaSize(index);
   };
-  const onCLickType = (index) => {
+  const onCLickType = (index: number) => {
     setActiveType(index);
   };
 
   return (
     <div className="pizza-block-wrapper">
       <div className="pizza-block">
-        <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
-        <h4 className="pizza-block__title">{title}</h4>
+        <Link key={id} to={`pizza/${id}`}>
+          <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
+          <h4 className="pizza-block__title">{title}</h4>
+        </Link>
         <div className="pizza-block__selector">
           <ul>
             {types.map((type, i) => (
@@ -85,6 +109,6 @@ function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
       </div>
     </div>
   );
-}
+};
 
 export default PizzaBlock;

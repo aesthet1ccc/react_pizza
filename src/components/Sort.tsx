@@ -1,29 +1,32 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setSort } from "../redux/slices/filterSlice";
+import { setSort, SortPropertyValue } from "../redux/slices/filterSlice";
 import { useClickOutside } from "../assets/onClickOutside";
+import { RootState } from "../redux/store";
 
-export const itemsPopup = [
-  { name: "С высоким рейтингом", sortProperty: "rating" },
-  { name: "С низким рейтингом", sortProperty: "-rating" },
-  { name: "Дороже", sortProperty: "price" },
-  { name: "Дешевле", sortProperty: "-price" },
-  { name: "По алфавиту", sortProperty: "-title" },
+type Items = { name: string; sortProperty: SortPropertyValue };
+
+export const itemsPopup: Items[] = [
+  { name: "С высоким рейтингом", sortProperty: SortPropertyValue.RATING_DESC },
+  { name: "С низким рейтингом", sortProperty: SortPropertyValue.RATING_ASC },
+  { name: "Дороже", sortProperty: SortPropertyValue.PRICE_DESC },
+  { name: "Дешевле", sortProperty: SortPropertyValue.PRICE_ASC },
+  { name: "По алфавиту", sortProperty: SortPropertyValue.TITLE_ASC },
 ];
 
-function Sort() {
+const Sort: React.FC = React.memo(() => {
   const [open, setOpen] = React.useState(false);
-  const sortRef = React.useRef(null);
+  const sortRef = React.useRef<HTMLDivElement>(null);
   useClickOutside(sortRef, () => setOpen(false));
 
   const dispatch = useDispatch();
-  const sort = useSelector((state) => state.filter.sort);
+  const sort = useSelector((state: RootState) => state.filter.sort);
 
   const onClickOpen = () => {
     setOpen(!open);
   };
 
-  const onClickActivePopup = (obj) => {
+  const onClickActivePopup = (obj: Items) => {
     dispatch(setSort(obj));
     setOpen(false);
   };
@@ -67,6 +70,5 @@ function Sort() {
       </div>
     </div>
   );
-}
-
+});
 export default Sort;

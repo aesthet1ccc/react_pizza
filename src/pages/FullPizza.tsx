@@ -3,7 +3,11 @@ import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 const FullPizza = () => {
-  const [pizza, setPizza] = React.useState();
+  const [pizza, setPizza] = React.useState<{
+    imageUrl: string;
+    title: string;
+    price: number;
+  }>();
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -25,14 +29,14 @@ const FullPizza = () => {
   }, []);
 
   if (!pizza) {
-    return "Загрузка...";
+    return <>Загрузка...</>;
   }
 
   return (
-    <div className="container">
+    <div className="container fullPizza_container">
+      <h1>Информация о пицце {pizza.title}</h1>
       <img width={300} height={300} src={pizza.imageUrl} alt="" />
-      <h2> Название пиццы: {pizza.title}</h2>
-      <h3>Стоимость: {pizza.price}</h3>
+      <p>Стоимость: {pizza.price} рублей</p>
     </div>
   );
 };
